@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TheWorld.Serices
+﻿namespace TheWorld.Serices
 {
     public interface IMailService
     {
