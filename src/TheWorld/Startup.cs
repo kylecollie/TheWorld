@@ -8,6 +8,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json.Serialization;
 using TheWorld.Models;
 using TheWorld.Serices;
+using TheWorld.Services;
 using TheWorld.ViewModels;
 
 namespace TheWorld
@@ -42,6 +43,7 @@ namespace TheWorld
                 .AddSqlServer()
                 .AddDbContext<WorldContext>();
 
+            services.AddScoped<CoordService>();
             services.AddTransient<WorldContextSeedData>();
             services.AddScoped<IWorldRepository, WorldRepository>();
 
