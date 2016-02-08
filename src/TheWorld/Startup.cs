@@ -3,7 +3,6 @@ using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -85,14 +84,28 @@ namespace TheWorld
 #if DEBUG
             services.AddScoped<IMailService, DebugMailService>();
 #else
-            services.AddScoped<IMailService, RealMailService>();
+            services.AddScoped<IMailService, MailService>();
 #endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, WorldContextSeedData seeder, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app,
+            WorldContextSeedData seeder,
+            ILoggerFactory loggerFactory,
+            IHostingEnvironment env)
         {
-            loggerFactory.AddDebug(LogLevel.Warning);
+
+            if (env.IsDevelopment())
+            {
+                loggerFactory.AddDebug(LogLevel.Information);
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                loggerFactory.AddDebug(LogLevel.Error);
+                app.UseExceptionHandler("/App/Error");
+            }
+
 
             app.UseStaticFiles();
 
