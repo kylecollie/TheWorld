@@ -38,7 +38,7 @@ namespace TheWorld
             services.AddMvc(config => 
             {
 #if !DEBUG
-                config.Filters.Add(new RequireHttpsAttribute());
+                //config.Filters.Add(new RequireHttpsAttribute());
 #endif
             })
             .AddJsonOptions(opt =>

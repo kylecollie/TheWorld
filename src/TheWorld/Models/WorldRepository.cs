@@ -56,7 +56,7 @@ namespace TheWorld.Models
             try
             {
                 return _context.Trips
-                        .Include(t => t.Stops)
+                        .Include(t => t.Stops.OrderBy(s => s.Arrival))
                         .OrderBy(t => t.Name)
                         .ToList();
             }
